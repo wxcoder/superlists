@@ -5,6 +5,7 @@ import unittest
 class NewVisitorTest(unittest.TestCase):
     
     def setUp(self):
+        """Open a Firefox  webpage"""
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
     def tearDown(self):
@@ -13,14 +14,19 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Edith has heard about a cool new online to-do app. She goes
         # to check out its homepage
+        """Load webpage on local machine"""
         self.browser.get('http://localhost:8000')
 
         # She notices the page title and header mention to-do lists
+        """Check that the browser title and header has 'To-Do"""
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
         
         #She is invited to enter a to-do item straight away
+        """Check for the id: id_new_item and get the placeholder attribute
+           and see if it is equal to 'Enter a to-do item' 
+        """
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(
                 inputbox.get_attribute('placeholder'),
@@ -37,10 +43,8 @@ class NewVisitorTest(unittest.TestCase):
         
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        self.assertIn('1: Buy peacock feathers',[row.text for row in rows])
+        
 
         # There is still a text box inviting her to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very methodical)
