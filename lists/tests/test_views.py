@@ -23,12 +23,12 @@ class ListViewTest(TestCase):
 
     def test_uses_list_template(self):
         list_ = List.objects.create()
-        response = self.client.get('/lists/%d/' % (list_.id,))
-        self.assertTemplateUsed(response, 'list.html')
+        response = self.client.get('/lists/%d/' % (list_.id,)) #use Django test client
+        self.assertTemplateUsed(response, 'list.html') #check template used
 
     def test_displays_only_items_for_that_list_items(self):
         correct_list = List.objects.create()
-        Item.objects.create(text='itemey 1', list=correct_list)
+        Item.objects.create(text='itemey 1', list=correct_list) 
         Item.objects.create(text='itemey 2', list=correct_list)
         other_list = List.objects.create()
         Item.objects.create(text='other list item 1', list=other_list)
@@ -36,7 +36,7 @@ class ListViewTest(TestCase):
 
         response = self.client.get('/lists/%d/' % (correct_list.id,))
 
-        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 1') # test template logic
         self.assertContains(response, 'itemey 2')
         self.assertNotContains(response, 'other list item 1')
         self.assertNotContains(response, 'other list item 2')
@@ -48,6 +48,7 @@ class ListViewTest(TestCase):
         self.assertEqual(response.context['list'], correct_list)
 
     def test_can_save_a_POST_request_to_an_existing_list(self):
+        "Test for valid input"
         other_list = List.objects.create()
         correct_list = List.objects.create()
 
@@ -113,7 +114,7 @@ class ListViewTest(TestCase):
     def test_displays_item_form(self):
         list_ = List.objects.create()
         response = self.client.get('/lists/%d/' % (list_.id,))
-        self.assertIsInstance(response.context['form'], ExistingListItemForm)
+        self.assertIsInstance(response.context['form'], ExistingListItemForm) #verify form is off the correct class
         self.assertContains(response, 'name="text"')
 
 class NewItemTest(TestCase):
