@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+function setupModule() {
 	$('input[name="text"]').on('keypress', function() {
     	$('.has-error').hide();
 	});
@@ -7,4 +7,6 @@ jQuery(document).ready(function ($) {
 		$('.has-error').hide();
 
 	});
-});
+
+};
+

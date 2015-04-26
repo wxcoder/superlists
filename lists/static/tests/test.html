@@ -21,6 +21,7 @@
 	<script type="text/javascript">
 jQuery(document).ready(function ($) {
 
+module('tests', {setup:setupModule});
 test("errors should be hidden on click", function() {
 	$('input[name="text"]').trigger('click');
 	equal($('.has-error').is(':visible'), false);
@@ -43,6 +44,7 @@ test("errors should be hidden on key press", function() {
 
 
 });
+
 
 
 
