@@ -1,9 +1,9 @@
 function setupModule() {
-	$('input[name="text"]').on('keypress', function() {
+	$('input').on('keypress', function() {
     	$('.has-error').hide();
 	});
 
-	$('input[name="text"]').on('click', function() {
+	$('input').on('click', function() {
 		$('.has-error').hide();
 
 	});
