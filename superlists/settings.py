@@ -24,7 +24,9 @@ SECRET_KEY = '1t1ak4i@r=j9zhv5z0k$su4d-7(9#3#l+bt2_nq)6pk=d5p6#7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+DOMAIN = "localhost"
+
+ALLOWED_HOSTS = [DOMAIN]
 
 
 # Application definition
@@ -38,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'lists',
     'accounts',
+    'functional_tests',
 )
 
 AUTH_USER_MODEL = 'accounts.User'
