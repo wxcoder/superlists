@@ -4,11 +4,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 import sys
 from .server_tools import reset_database
 from pyvirtualdisplay import Display
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 #from .server_tools import reset_database
 
 display = Display(visible=0, size=(1024, 768))
 display.start()
-
+binary = FirefoxBinary('/usr/local/firefox/firefox')
 class FunctionalTest(StaticLiveServerTestCase):
 
 
@@ -33,7 +34,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         """Open a Firefox  webpage"""
         if self.against_staging:
             reset_database(self.server_host)
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Firefox(firefox_binary=binary)
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
