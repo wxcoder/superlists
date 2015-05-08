@@ -1,12 +1,14 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.support.ui import WebDriverWait
 import sys
 from .server_tools import reset_database
+from pyvirtualdisplay import Display
 #from .server_tools import reset_database
 
-binary = FirefoxBinary('/usr/local/bin/firefox')
+display = Display(visible=0, size=(1024, 768))
+display.start()
+
 class FunctionalTest(StaticLiveServerTestCase):
 
 
@@ -31,7 +33,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         """Open a Firefox  webpage"""
         if self.against_staging:
             reset_database(self.server_host)
-        self.browser = webdriver.Firefox(firefox_binary=binary)
+        self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
