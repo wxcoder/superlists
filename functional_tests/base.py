@@ -9,16 +9,16 @@ from pyvirtualdisplay import Display
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 #from .server_tools import reset_database
 
-<<<<<<< HEAD
+
 SCREEN_DUMP_LOCATION = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'screendumps'
 )
 
-=======
+
 display = Display(visible=0, size=(1024, 768))
 display.start()
 binary = FirefoxBinary('/usr/local/firefox/firefox')
->>>>>>> 178e200d38c809b06d0df728bef560b0012f85e3
+
 class FunctionalTest(StaticLiveServerTestCase):
 
 
