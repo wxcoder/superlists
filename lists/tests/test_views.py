@@ -202,11 +202,33 @@ class MyListsTest(TestCase):
 
     def test_my_lists_url_renders_my_lists_template(self):
         User.objects.create(email='a@b.com')
-        response = self.client.get('/lists/users/a@b.com/')
+        list_ = List.objects.create()
+        response = self.client.get('/lists/users/a@b.com/', list_)
         self.assertTemplateUsed(response, 'my_lists.html')
 
-    def test_passes_correct_ownder_to_template(self):
+    def test_passes_correct_owner_to_template(self):
         User.objects.create(email='wrong@wownder.com')
         correct_user = User.objects.create(email='a@b.com')
         response = self.client.get('/lists/users/a@b.com/')
         self.assertEqual(response.context['owner'], correct_user)
+
+class ShareListTest(TestCase):
+
+    def test_post_redirects_to_lists_page(self):
+        duser = User.objects.create(email='a@b.com')
+        shared_list = List.objects.create()
+        response=self.client.post(
+            '/lists/%d/share' % (shared_list.id),
+            {'email': 'a@b.com'}
+        )
+
+        self.assertRedirects(response,'/lists/%d/' % (shared_list.id,))
+
+    def test_check_user_is_added_to_list(self):
+        duser = User.objects.create(email='a@b.com')
+        shared_list = List.objects.create()
+        self.client.post(
+            '/lists/%d/share' % (shared_list.id),
+            {'email':'a@b.com'}
+        )
+        self.assertIn(duser, shared_list.shared_with.all())
