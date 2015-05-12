@@ -2,6 +2,7 @@
 from .server_tools import create_session_on_server
 #from .management.commands.create_session import create_pre_authenticated_session
 from .base import FunctionalTest
+from .home_and_list_pages import HomePage
 
 class MyListsTest(FunctionalTest):
 
@@ -11,12 +12,12 @@ class MyListsTest(FunctionalTest):
 
 		# She goes to the home page and starts a MyListsTest
 		self.browser.get(self.server_url)
-		self.get_item_input_box().send_keys('Reticulate splines\n')
-		self.get_item_input_box().send_keys('Immanentize eschaton\n')
+		list_page = HomePage(self).start_new_list('Reticulate splines')
+		list_page.add_new_item('Immanentize eschaton')
 		first_list_url = self.browser.current_url
 
 		# She notices a "My lists" link, for the first time.
-		self.browser.find_element_by_link_text('My lists').click()
+		HomePage(self).go_to_my_lists_page()
 
 		#She sees that her list is in there, named  according to its
 		# first list item
@@ -27,7 +28,8 @@ class MyListsTest(FunctionalTest):
 
 		# She decides to start another list, just to see
 		self.browser.get(self.server_url)
-		self.get_item_input_box().send_keys('Click cows\n')
+		#self.get_item_input_box().send_keys('Click cows\n')
+		list_page2 = HomePage(self).start_new_list('Click cows')
 		second_list_url = self.browser.current_url
 
 		# Under "my lists", her new list appears

@@ -1,5 +1,6 @@
 from unittest import skip
 from .base import FunctionalTest
+from .home_and_list_pages import HomePage
 
 class ItemValidationTest(FunctionalTest):
    
